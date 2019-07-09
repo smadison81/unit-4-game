@@ -20,21 +20,21 @@
     </div>
     <div class="container">
 
-        <div class="row selector mt-5">
-            <div class="card col-sm-4 ken_sel card align-items-center">
-                <img src="./assets/images/ken_face.jpg">
+        <div class="row selector mt-5 mx-auto">
+            <div id="character-ken-card" class="card col-sm-4 card align-items-center" style="background-image: url('./assets/images/ken_face.jpg')">
+                <!-- <img src="./assets/images/ken_face.jpg"> -->
                 <h4>Ken</h4>
-                <p class="kenHp"></p>
+                <p class="kenHp">HP</p>
             </div>
-            <div class="card col-sm-4 ryu_sel card align-items-center">
-                <img src="./assets/images/ryu_face.jpg">
+            <div id="character-ryu-card" class="card col-sm-4card align-items-center" style="background-image: url('./assets/images/ryu_face.jpg')">
+                <!-- <img src="./assets/images/ryu_face.jpg"> -->
                 <h4>Ryu</h4>
-                <p class="ryuHP"></p>
+                <p class="ryuHP">HP</p>
             </div>
-            <div class="card col-sm-4 bison_sel card align-items-center">
-                <img src="./assets/images/bison_face.jpg">
+            <div id="character-bison-card" class="card col-sm-4 card align-items-center" style="background-image: url('./assets/images/bison_face.jpg')">
+                <!-- <img src="./assets/images/bison_face.jpg"> -->
                 <h4>M. Bison</h4>
-                <p class="bisonHP"></p>
+                <p class="bisonHP">HP</p>
             </div>
         </div>
 
@@ -42,46 +42,165 @@
 
         </div>
 
-        <div class="row arena">
-
-            <div col-md-3 fighter>
-
-
+        <div id="arena" class="row arena" style="width: 100%">
+            <div class="col-md-3" id="player">
+                    <div id="fighter-ken-card" class="card col-sm-4 card align-items-center">
+                            <img src="./assets/images/ken_user.png">
+                            <h4>Ken</h4>
+                            <p class="kenHp">HP</p>
+                        </div>
+                        <div id="fighter-ryu-card" class="card col-sm-4card align-items-center">
+                            <img src="./assets/images/ryu_user.png">
+                            <h4>Ryu</h4>
+                            <p class="ryuHP">HP</p>
+                        </div>
+                        <div id="fighter-bison-card" class="card col-sm-4 card align-items-center">
+                            <img src="./assets/images/bison_user.png">
+                            <h4>M. Bison</h4>
+                            <p class="bisonHP">HP</p>
+                        </div>
             </div>
 
-            <div col-md-3 space>
-
-
+            <div class="col-md-4 m-auto" id="space">
+                    <button id="attackButton" class="btn btn-danger btn-lg" type="button">Attack</button>
             </div>
 
-            <div col-md-3 defender>
-
-
+            <div class="col-md-3" id="defender">
+                    <div id="opponent-ken-card" class="card col-sm-4 card align-items-center">
+                            <img src="./assets/images/ken_def.png">
+                            <h4>Ken</h4>
+                            <p class="kenHp">HP</p>
+                        </div>
+                        <div id="opponent-ryu-card" class="card col-sm-4card align-items-center">
+                            <img src="./assets/images/ryu_def.png">
+                            <h4>Ryu</h4>
+                            <p class="ryuHP">HP</p>
+                        </div>
+                        <div id="opponent-bison-card" class="card col-sm-4 card align-items-center">
+                            <img src="./assets/images/bison_def.png">
+                            <h4>M. Bison</h4>
+                            <p class="bisonHP">HP</p>
+                        </div>
             </div>
-
-
         </div>
-
-
     </div>
-
-
-
-
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script type="text/javascript" src="/assets/javascript/game.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+    <script>
+        var gameModes = ['selectPlayer','selectOpponent','play','clean-up'];
+        var currentMode = gameModes[0];
+
+        var currentFighter = {
+            id:"",
+            hp:100
+        };
+        var currentOpponent = {
+            id:"",
+            hp:100
+        };
+
+        $( document ).ready(function() {
+            
+            $("div[id^='fighter']").hide();
+            $("div[id^='opponent']").hide();
+
+            // attach click event to the attack button
+            $('#attackButton').click(function(){
+                    attackOpponent();
+                });
+            $('#attackButton')
+                .prop('disabled',true);
+
+            // attach click event to the character div's
+            $("div[id^='character']").each(function(){
+
+                $(this).click(function(){
+
+                   if(currentMode === gameModes[0]){
+
+                       var fidArray = this.id.split('-');
+                       var partOne = fidArray[1];
+                       var partTwo = fidArray[2];
+                       var fid = partOne + '-' + partTwo;
+
+                       $(this).hide();
+                       $('#fighter-'+fid).show();
+                       currentFighter.id = "fighter-" + fid;
+                       currentMode = gameModes[1];
+
+                       console.log(currentFighter);
+
+                   } else if(currentMode === gameModes[1]){
+
+                        var fidArray = this.id.split('-');
+                        var partOne = fidArray[1];
+                        var partTwo = fidArray[2];
+                        var fid = partOne + '-' + partTwo;
+
+                        $(this).hide();
+                        $('#opponent-'+fid).show();
+                        currentOpponent.id = "opponent-" + fid;
+                        currentMode = gameModes[2];
+
+                        console.log(currentOpponent);
+                        console.log(currentMode);
+
+                        playGame();
+                    }
+                                            
+                });
+            });
+
+        });
+
+        function playGame(){
+            $('#attackButton').prop('disabled',false);
+        }
+
+        function attackOpponent(){
+            console.log('attacking...');
+            // attack opponent and subtract from currentOpponent.hp
+
+            // counter-attack fighter and subtract from currentFighter.hp
+
+            if(currentFighter.hp <= 0){
+                console.log('here in cf.hp');
+                // end the game.
+
+            } else if(currentOpponent.hp <= 0){
+
+                console.log('here in co.hp');
+                // the currentOpponent has fallen, player must select another
+
+                // currentOpponent should disappear
+
+                // game mode is back at selectOpponent
+                $('#attackButton').prop('disabled',true);
+                currentMode = gameModes[1];
+
+            }
+            resetGame();
+        }
+
+        function resetGame(){
+            $("div[id^='character']").show();
+            $("div[id^='fighter']").hide();
+            $("div[id^='opponent']").hide();
+            currentMode = gameModes[0];
+        }
+    </script>
+
 </body>
 
 </html>

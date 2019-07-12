@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'ssf4_abuketregular';
-  src: url('./css/fonts/ssf4_abuket-webfont.woff2') format('woff2'), url('./css/fonts/ssf4_abuket-webfont.woff') format('woff');
+  src: url('./fonts/ssf4_abuket-webfont.woff2') format('woff2'), url('./fonts/ssf4_abuket-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }

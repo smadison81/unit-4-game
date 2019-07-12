@@ -15,6 +15,11 @@
   width: 100%;
   color: yellow;
   text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+}
+
+h1{
+  font-size: 6  0px;
 }
 
 html {
@@ -32,18 +37,29 @@ body {
 }
 
 .card {
-  background-color: rgba(0, 0, 0, .3);
+  /* background-color: rgba(0, 0, 0, .3); */
+  background-color: transparent;
   text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   color: yellow;
   padding: 10%;
+  
 }
+.card-img-bottom{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.card-text{
+
+  font-size: 70px;
+
+}
+
 
 /* ks */
 
-  #fighter-ken-card {
-    background-repeat: no-repeat;
-  
-  }
+ 
   
 
 
